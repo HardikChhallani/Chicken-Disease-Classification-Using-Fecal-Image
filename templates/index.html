@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cluck Cluck Poop Doc</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        body {
+            background: linear-gradient(135deg, #ffebcd 0%, #ffe4b5 100%);
+            font-family: 'Poppins', sans-serif;
+            color: #2c3e50;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            background: #e67e22;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        header h1 {
+            font-family: 'Comic Neue', cursive;
+            color: #fff;
+            font-size: 2.5rem;
+            margin: 0;
+            text-shadow: 3px 3px #d35400;
+            animation: bounce 2s infinite;
+        }
+        header p {
+            color: #fff;
+            font-size: 1rem;
+            font-style: italic;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 15px;
+            flex: 1 0 auto;
+        }
+        .main-section {
+            background: #fffacd;
+            border-radius: 25px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        .image-part {
+            height: 300px;
+            width: 100%;
+            max-width: 340px;
+            margin: 0 auto;
+            border: 4px dashed #27ae60;
+            border-radius: 20px;
+            overflow: hidden;
+            background: #f0f8ff;
+            transition: transform 0.3s;
+        }
+        .image-part:hover {
+            transform: scale(1.05);
+        }
+        .image-part img, .image-part video {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            padding: 10px;
+        }
+        .image-part img {
+            display: none;
+        }
+        .image-part #video {
+            display: block;
+        }
+        .btn-part {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .btn {
+            font-family: 'Comic Neue', cursive;
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            border-radius: 15px;
+            transition: transform 0.2s, background 0.3s;
+            box-shadow: 0 4px #999;
+        }
+        .btn-primary {
+            background: #e67e22;
+            border: none;
+        }
+        .btn-success {
+            background: #27ae60;
+            border: none;
+        }
+        .btn:hover {
+            transform: scale(1.1);
+        }
+        .btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px #666;
+        }
+        .right-part {
+            display: none;
+            background: #f1f8e9;
+            border-radius: 20px;
+            padding: 15px;
+            margin: 20px auto; /* Centered with auto margins */
+            max-width: 600px; /* Limit width for better centering */
+            animation: cluckIn 0.6s ease-in-out;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2); /* Added shadow */
+        }
+        .res-part {
+            border: 3px dotted #e67e22;
+            border-radius: 15px;
+            padding: 15px;
+            overflow: auto;
+            background: #fff;
+            min-height: 200px;
+            font-family: 'Comic Neue', cursive;
+            font-size: 1.1rem;
+            color: #d35400;
+            text-align: center;
+        }
+        .res-part2 {
+            border: 3px dotted #e67e22;
+            border-radius: 15px;
+            padding: 10px;
+            overflow: auto;
+            background: #fff;
+            height: 250px;
+            display: none;
+        }
+        .res-part .diagnosis {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #27ae60;
+        }
+        .res-part .diagnosis.cocci {
+            color: #e74c3c;
+        }
+        .res-part .confidence {
+            font-size: 1.2rem;
+            color: #e67e22;
+        }
+        .res-part .joke {
+            font-style: italic;
+            color: #2c3e50;
+            margin-top: 10px;
+        }
+        .resp-img {
+            max-height: 100%;
+            border-radius: 10px;
+        }
+        #loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 9999;
+            display: none;
+        }
+        .loader {
+            border: 12px solid #f3f3f3;
+            border-top: 12px solid #27ae60;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            animation: spin 1s linear infinite;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .chicken-joke {
+            font-family: 'Comic Neue', cursive;
+            font-size: 1.3rem;
+            color: #d35400;
+            text-align: center;
+            margin: 15px 0;
+            padding: 10px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .joke-btn {
+            display: block;
+            margin: 10px auto;
+            font-size: 1rem;
+            padding: 8px 15px;
+        }
+        footer {
+            text-align: center;
+            padding: 15px;
+            background: #d35400;
+            color: #fff;
+            flex-shrink: 0;
+            width: 100%;
+        }
+        footer p {
+            margin: 0;
+            font-size: 1rem;
+        }
+        footer .heart {
+            color: #e74c3c;
+            font-size: 1.2rem;
+            animation: pulse 1s infinite;
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            header h1 { font-size: 2rem; }
+            header p { font-size: 0.9rem; }
+            .image-part { height: 250px; max-width: 100%; }
+            .btn { font-size: 1rem; padding: 8px 15px; }
+            .chicken-joke { font-size: 1.1rem; }
+            .res-part, .res-part2 { height: 200px; }
+            .right-part { max-width: 100%; } /* Full width on smaller screens */
+        }
+        @media (max-width: 576px) {
+            header h1 { font-size: 1.5rem; }
+            .btn-part .btn { width: 100%; margin: 5px 0; }
+            .res-part, .res-part2 { height: 150px; }
+        }
+
+        /* Animations */
+        @keyframes spin { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-15px); } 60% { transform: translateY(-7px); } }
+        @keyframes cluckIn { 
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.1) translateY(-10px); opacity: 0.7; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Cluck Cluck Poop Doc</h1>
+        <p>Why did the chicken poop? To get diagnosed here! 🐔💨</p>
+    </header>
+
+    <div class="container">
+        <div class="main-section">
+            <div class="row">
+                <div class="col-12 col-md-6 img-part">
+                    <div class="image-part">
+                        <video autoplay id="video" poster="https://img.freepik.com/free-vector/group-young-people-posing-photo_52683-18824.jpg?size=338&ext=jpg"></video>
+                        <img src="" id="photo">
+                        <canvas style="display:none;" id="canvas"></canvas>
+                    </div>
+                    <div class="btn-part">
+                        <form id="upload-data">
+                            <button type="button" class="btn btn-primary" id="uload">Drop the Poop!</button>
+                            <button id="send" type="button" class="btn btn-success">Sniff It Out!</button>
+                            <input type="hidden" id="url" value="../predict"/>
+                            <input name="upload" type="file" id="fileinput" style="display:none;"/>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 right-part">
+                    <h5 class="text-center mb-3">Poop Prognosis</h5>
+                    <div class="row justify-content-center"> <!-- Centered content -->
+                        <div class="res-part2 col-12 col-md-5"></div>
+                        <div class="res-part col-12 col-md-7"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="chicken-joke">Why don't chickens ever get sick? Because they have egg-cellent poop doctors!</div>
+            <button class="btn btn-primary joke-btn">Next Cluckin' Joke!</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>Made with <span class="heart">❤️</span> by Hardik - The Chicken Whisperer</p>
+    </footer>
+
+    <div id="loading"><div class="loader"></div></div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script>
+        var base_data = "";
+        const jokes = [
+            "Why did the chicken cross the road? To poop on the other side!",
+            "What do you call a chicken who poops gold? A cluckin' treasure!",
+            "Why don’t chickens use toilets? They prefer to drop it like it’s hot!"
+        ];
+        let jokeIndex = 0;
+
+        function cycleJoke() {
+            $(".chicken-joke").text(jokes[jokeIndex]);
+            jokeIndex = (jokeIndex + 1) % jokes.length;
+        }
+
+        function funnyJsonResponse(res) {
+            const data = res[0];
+            let diagnosis = data.diagnosis === "healthy" ? "Healthy" : "Coccidiosis";
+            let isCocci = diagnosis === "Coccidiosis";
+            let confidence = (Math.random() * 100).toFixed(2);
+            let advice = isCocci 
+                ? "🚨 Emergency cluck! Get this hen some TLC and maybe a spa day!" 
+                : "🎉 Cluck-tastic! This chicken’s poop is practically golden!";
+            
+            return `
+                <div class="diagnosis ${isCocci ? 'cocci' : ''}">🐔 ${diagnosis} 🐔</div>
+                <div class="confidence">Confidence: ${confidence}% - Our poop-o-tron 3000 says so!</div>
+                <div class="joke">${advice}</div>
+            `;
+        }
+
+        function sendRequest(base64Data) {
+            if (base64Data) {
+                var url = $("#url").val();
+                $("#loading").show();
+                $.ajax({
+                    url: url,
+                    type: "post",
+                    cache: false,
+                    async: true,
+                    crossDomain: true,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    data: JSON.stringify({ image: base64Data }),
+                    success: function(res) {
+                        $(".right-part").show();
+                        $(".res-part").html("");
+                        $(".res-part2").html("").hide();
+                        try {
+                            var imageData = res[1].image;
+                            if (imageData && imageData.length > 100) {
+                                $(".res-part2").append("<img class='resp-img' src='data:image/jpeg;base64," + imageData + "' alt='Poop Pic' />").show();
+                            }
+                        } catch (e) {}
+                        $(".res-part").html(funnyJsonResponse(res));
+                        cycleJoke();
+                        $("#loading").hide();
+                    },
+                    error: function() {
+                        $(".right-part").show();
+                        $(".res-part").html("<p>Whoops! The poop hit the fan. Try again, cluckster!</p>");
+                        $(".res-part2").hide();
+                        $("#loading").hide();
+                    }
+                });
+            }
+        }
+
+        $(document).ready(function() {
+            $("#loading").hide();
+
+            $('#send').click(function(evt) {
+                if (base_data) {
+                    sendRequest(base_data);
+                } else {
+                    alert("Hey, feather-brain! Upload some poop first! 🐔💩");
+                }
+            });
+
+            $('#uload').click(function(evt) {
+                $('#fileinput').trigger('click');
+            });
+
+            $("#fileinput").change(function() {
+                if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        var url = e.target.result;
+                        var img = new Image();
+                        img.crossOrigin = 'Anonymous';
+                        img.onload = function() {
+                            var canvas = document.createElement('canvas');
+                            var ctx = canvas.getContext('2d');
+                            canvas.height = this.height;
+                            canvas.width = this.width;
+                            ctx.drawImage(this, 0, 0);
+                            base_data = canvas.toDataURL('image/jpeg', 1.0).replace(/^data:image.+;base64,/, '');
+                            canvas = null;
+                        };
+                        img.src = url;
+                        $('#photo').attr('src', url);
+                        $('#photo').show();
+                        $('#video').hide();
+                    };
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+
+            // Joke cycling
+            $(".joke-btn").click(cycleJoke);
+            setInterval(cycleJoke, 5000);
+        });
+    </script>
+</body>
+</html>

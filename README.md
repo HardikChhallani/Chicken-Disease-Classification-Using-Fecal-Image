@@ -1,9 +1,3 @@
-Adding an image of the website is a great idea to give visitors a visual sneak peek! The best spot would be right after the "Demo" section, where users are already primed to see how the app works. This placement keeps the flow intuitive: they read about the demo, then see it in action with a screenshot.
-
-Here’s the updated README with the suggested spot marked as `#$image`:
-
----
-
 # Chicken Disease Classification Using Fecal Image 🐔💩
 
 Welcome to **Chicken Disease Classification Using Fecal Image**, a quirky yet powerful AI tool to diagnose chicken health through their droppings! Built with a fine-tuned VGG16 model, this project detects **Coccidiosis** or confirms a healthy cluck with a stellar **98% accuracy**. Upload a poop pic, and let our "Poop-o-tron 3000" deliver insights with a dash of chicken humor! 🎉
@@ -83,8 +77,7 @@ This project follows a clean **pipeline structure** to turn poop pics into healt
 - Healthy: "🐔 Healthy 🐔 - Cluck-tastic! This poop’s golden!"  
 - Coccidiosis: "🐔 Coccidiosis 🐔 - Emergency cluck! Spa day needed!"
 
-#$image  
-*Insert a screenshot of the website here to show off the cluck-tastic interface!*
+![image](https://github.com/user-attachments/assets/20dfac39-08e6-48b3-9e77-3bd79e99da93)
 
 ---
 
@@ -160,15 +153,3 @@ This project is licensed under the MIT License—cluck around with it freely!
 **[Explore the Project](https://github.com/HardikChhallani/Chicken-Disease-Classification-Using-Fecal-Image)**—because every poop tells a story, and we’re here to decode it! Happy clucking! 🐔💨
 
 ---
-
-### How to Use the Image Spot:
-- Replace `#$image` with an actual image link once you have a screenshot. For example:
-  ```markdown
-  ![Website Screenshot](path/to/screenshot.png)
-  ```
-- Upload the screenshot to your GitHub repo (e.g., in an `images` folder) and link it like:
-  ```markdown
-  ![Website Screenshot](images/screenshot.png)
-  ```
-
-This placement keeps the README flowing naturally—demo instructions followed by a visual, then setup details. Let me know if you’d prefer the image elsewhere! 🐔📸
